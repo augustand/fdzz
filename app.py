@@ -72,11 +72,11 @@ def _index1():
     phone = request.args.get("phone").strip()
     b = Query(HouseInfo).equal_to('phone', phone).find()
 
-    if not phone:
-        return {"url": "http://fdzz.leanapp.cn/null",
-                "data": [],
-                "agent": "no"
-                }
+    if not b:
+        return json.dumps({"url": "http://fdzz.leanapp.cn/null",
+                           "data": [],
+                           "agent": "no"
+                           })
 
     a = {x.get('xiaoqu').strip() for x in b}
     if len(a) >= 2:
