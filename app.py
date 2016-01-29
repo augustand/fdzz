@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from flask import Flask,render_template
+from flask import Flask, render_template
 from leancloud import Object
 from leancloud import Query
 from leancloud import LeanCloudError
@@ -23,11 +23,10 @@ def index():
 
 @app.route('/null')
 def _pp():
-
     # Query(HouseInfo).not_contained_in()("quyu", [u"昌平", u"怀柔",u"朝阳"])
     # _quyu = {x.get("quyu") for x in Query(HouseInfo).find()}
 
-    return render_template('hello.html',quyu=[u"昌平", u"怀柔",u"朝阳"])
+    return render_template('hello.html', quyu=[u"昌平", u"怀柔", u"朝阳"])
 
 
 @app.route('/check')
@@ -40,7 +39,6 @@ def _indexc():
 
     if not phone:
         return "http://fdzz.leanapp.cn/null"
-
 
     print phone[-1].get('owner'), '\n\n'
 
@@ -73,6 +71,12 @@ def _indexc():
 def _index1():
     phone = request.args.get("phone").strip()
     b = Query(HouseInfo).equal_to('phone', phone).find()
+
+    if not phone:
+        return {"url": "http://fdzz.leanapp.cn/null",
+                "data": [],
+                "agent": "no"
+                }
 
     a = {x.get('xiaoqu').strip() for x in b}
     if len(a) >= 2:
